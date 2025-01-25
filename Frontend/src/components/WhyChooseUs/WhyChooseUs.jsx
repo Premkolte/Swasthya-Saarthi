@@ -8,16 +8,16 @@ import { SlideLeft } from "../../utility/animation";
 const WhyChooseData = [
   {
     id: 1,
-    title: "One-on-one Teaching",
-    desc: "All of our special education experts have a degree in special education.",
+    title: "AI-Powered Medication Scanner",
+    desc: "Scan and analyze medicines for drug interactions, side effects, and dosage recommendations with our advanced AI-powered medication scanner.",
     icon: <GrYoga />,
     bgColor: "#0063ff",
     delay: 0.3,
   },
   {
     id: 2,
-    title: "24/7 Tutor Availability",
-    desc: "Our tutors are always available to respond as quick as possible for you",
+    title: "24/7 Health Support",
+    desc: "Swasthya Saarthi is available round the clock to assist with symptom analysis, emergency tutorials, and healthcare queries whenever you need.",
     link: "/",
     icon: <FaDumbbell />,
     bgColor: "#73bc00",
@@ -25,8 +25,8 @@ const WhyChooseData = [
   },
   {
     id: 3,
-    title: "Interactive Whiteboard",
-    desc: "Our digital whiteboard equipped with audio and video chat fetures.",
+    title: "Localized Health Information",
+    desc: "Stay informed with real-time updates on nearby hospitals, doctor availability, pharmacies, and rising disease cases in your area.",
     link: "/",
     icon: <GiGymBag />,
     bgColor: "#fa6400",
@@ -34,13 +34,22 @@ const WhyChooseData = [
   },
   {
     id: 4,
-    title: "Affordable Prices",
-    desc: "Choose an expert tutor based on your budget and per hour.",
+    title: "Interactive Tutorials",
+    desc: "Access engaging AR-based tutorials and videos for emergency first aid and preventive care, making healthcare easy to understand.",
     link: "/",
     icon: <GiGymBag />,
     bgColor: "#fe6baa",
     delay: 0.9,
   },
+  {
+    id: 5,
+    title: "One-on-One Health Guidance",
+    desc: "Our AI-driven virtual assistant provides tailored health recommendations and step-by-step medical guidance personalized for your unique needs.",
+    link: "/",
+    icon: <GiGymBag />,
+    bgColor: "#fe6baa",
+    delay: 0.9,
+  }
 ];
 const WhyChooseUs = () => {
   return (
@@ -52,11 +61,11 @@ const WhyChooseUs = () => {
             Why Choose Us
           </h1>
           <p className="font-semibold text-3xl">
-            Benefits of online tutoring services with us
+          Benefits of using Swasthya Saarthi for personalized healthcare services
           </p>
         </div>
         {/* cards section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
           {WhyChooseData.map((item) => {
             return (
               <motion.div

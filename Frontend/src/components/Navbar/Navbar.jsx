@@ -2,6 +2,7 @@ import React from "react";
 import { NavbarMenu } from "../../mockData/data.js";
 import { MdComputer, MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
+import logo from "../../../public/assets/Swasthya-Saarthi.png";
 import ResponsiveMenu from "./ResponsiveMenu.jsx";
 
 const Navbar = () => {
@@ -16,8 +17,8 @@ const Navbar = () => {
         <div className="container flex justify-between items-center py-6">
           {/* Logo section */}
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <MdComputer className="text-3xl text-secondary" />
-            <p>E-Tutor</p>
+            {logo && <img src={logo} alt="logo" className="w-10 h-10" />}
+            <p>Swasthya Saarthi</p>
           </div>
 
           {/* Menu section */}
