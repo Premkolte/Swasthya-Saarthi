@@ -54,7 +54,7 @@ const Banner = ({ image, title, subtitle, link, tag, reverse }) => {
               whileInView={"visible"}
               className="flex justify-center md:justify-start"
             >
-              <button className="primary-btn !mt-5">Get Started</button>
+              <button className="primary-btn !mt-5 text-white">Get Started</button>
             </motion.div>
           </div>
         </div>
