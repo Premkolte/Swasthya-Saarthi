@@ -4,6 +4,7 @@ import { MdComputer, MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import logo from "../../../public/assets/Swasthya-Saarthi.png";
 import ResponsiveMenu from "./ResponsiveMenu.jsx";
+import Languages  from "./Language.jsx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -13,8 +14,13 @@ const Navbar = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-      >
+      > 
+        <div className="container flex ">
+          <Languages/>
+        </div>
+        
         <div className="container flex justify-between items-center py-6">
+          
           {/* Logo section */}
           <div className="text-2xl flex items-center gap-2 font-bold">
             {logo && <img src={logo} alt="logo" className="w-10 h-10" />}

@@ -64,3 +64,4 @@ const Banner = ({ image, title, subtitle, link, tag, reverse }) => {
 };
 
 export default Banner;
+
