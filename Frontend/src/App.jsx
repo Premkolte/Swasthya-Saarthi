@@ -14,19 +14,19 @@ import { Analytics } from "@vercel/analytics/react";
 
 const BannerData = {
   image: Img1,
-  tag: "CUSTOMIZE WITH YOUR SCHEDULE",
-  title: "Personalized Professional Online Tutor on Your Schedule",
+  tag: "Personalized Health Monitoring",
+  title: "Track and Manage Your Health Effortlessly",
   subtitle:
-    "Our scheduling system allows you to select based on your free time. Lorem ipsum demo text for template. Keep track of your students class and tutoring schedules, and never miss your lectures. The best online class scheduling system with easy accessibility.Lorem ipsum is a placeholder text commonly used to demonstrate the visual form",
+    "Our platform helps you track your health with customized reports, reminders for medication, and alerts for upcoming health checkups.",
   link: "#",
 };
 
 const BannerData2 = {
   image: Img2,
-  tag: "CUSTOMIZE WITH YOUR SCHEDULE",
-  title: "Talented and Qualified Tutors to Serve You for Help",
+  tag: "Connect with Nearby Healthcare Providers",
+  title: "Access Local Health Services with Ease",
   subtitle:
-    "Our scheduling system allows you to select based on your free time. Lorem ipsum demo text for template. Keep track of your students class and tutoring schedules, and never miss your lectures. The best online class scheduling system with easy accessibility. Lorem ipsum is a placeholder text commonly used",
+    "Find verified local clinics, hospitals, and pharmacies in your area. Stay updated on essential health drives and community healthcare events.",
   link: "#",
 };
 

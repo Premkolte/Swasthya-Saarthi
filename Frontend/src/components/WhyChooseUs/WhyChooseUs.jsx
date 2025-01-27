@@ -56,12 +56,12 @@ const WhyChooseUs = () => {
     <div className="bg-[#f9fafc]">
       <div className="container py-24">
         {/* header section */}
-        <div className="space-y-4 p-6 text-center max-w-[500px] mx-auto mb-5">
+        <div className="space-y-4 p-6 text-center max-w-[600px] mx-auto mb-5">
           <h1 className="uppercase font-semibold text-orange-600">
             Why Choose Us
           </h1>
           <p className="font-semibold text-3xl">
-          Benefits of using Swasthya Saarthi for personalized healthcare services
+          Benefits of using Swasthya Saarthi 
           </p>
         </div>
         {/* cards section */}
