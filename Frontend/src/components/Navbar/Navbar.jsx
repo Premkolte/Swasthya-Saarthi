@@ -14,7 +14,7 @@ const Navbar = () => {
   // const [showTextResizer, setShowTextResizer] = useState(false);
   return (
     <>
-
+      
     
       <motion.div
         initial={{ opacity: 0 }}
