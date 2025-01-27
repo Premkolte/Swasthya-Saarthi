@@ -11,7 +11,6 @@ import { FaHighlighter, FaTextHeight } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  // const [showTextResizer, setShowTextResizer] = useState(false);
   return (
     <>
       
@@ -29,7 +28,7 @@ const Navbar = () => {
               className="cursor-pointer hover:text-black"
               title="Text Resize"
               onClick={() => setShowTextResizer(true)} // Show the Text Resizer popup
-            />
+            /> 
             
             <ThemeChange/>
             <TextToSpeech/>
