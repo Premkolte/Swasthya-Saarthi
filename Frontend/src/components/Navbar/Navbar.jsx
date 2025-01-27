@@ -4,21 +4,41 @@ import { MdComputer, MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import logo from "../../../public/assets/Swasthya-Saarthi.png";
 import ResponsiveMenu from "./ResponsiveMenu.jsx";
-import Languages  from "./Language.jsx";
+import GoogleTranslate  from "./Language.jsx";
+import TextToSpeech from "./TexttoSpeach.jsx";
+import ThemeChange from "./Themechange.jsx";
+import { FaHighlighter, FaTextHeight } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  // const [showTextResizer, setShowTextResizer] = useState(false);
   return (
     <>
+
+    
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       > 
-        <div className="container flex ">
-          <Languages/>
+        <div className="flex items-center justify-between">
+        <div className="flex m-2 ml-2 space-x-4">
+        <FaHighlighter size={24} className="cursor-pointer hover:text-black" title="Highlight Text" />
+            <FaTextHeight
+              size={24}
+              className="cursor-pointer hover:text-black"
+              title="Text Resize"
+              onClick={() => setShowTextResizer(true)} // Show the Text Resizer popup
+            />
+            
+            <ThemeChange/>
+            <TextToSpeech/>
+          </div>
+          <div>
+            <GoogleTranslate/>
+          </div>
         </div>
-        
+
         <div className="container flex justify-between items-center py-6">
           
           {/* Logo section */}
