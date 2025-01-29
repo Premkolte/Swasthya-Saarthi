@@ -30,6 +30,15 @@ const BannerData2 = {
   link: "#",
 };
 
+const BannerData3 = {
+  image: Img1,
+  tag: "Medical Order Record",
+  title: "Easily Manage and Track Your Medical Orders",
+  subtitle:
+    "Our platform enables seamless management of medical prescriptions, lab tests, and treatment orders for better healthcare coordination.",
+  link: "#",
+};
+
 const App = () => {
   return (
     <main className="overflow-x-hidden">
@@ -40,6 +49,7 @@ const App = () => {
       <NumberCounter />
       <Banner {...BannerData} />
       <Banner {...BannerData2} reverse={true} />
+      <Banner {...BannerData3} />
       <SubjectCard />
       <WhyChooseUs />
       <Testimonial />
