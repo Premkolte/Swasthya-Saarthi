@@ -1,5 +1,6 @@
 import React from "react";
 import { NavbarMenu } from "../../mockData/data.js";
+import { useNavigate } from "react-router-dom";
 import { MdComputer, MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import logo from "../../../public/assets/Swasthya-Saarthi.png";
@@ -11,6 +12,12 @@ import { FaHighlighter, FaTextHeight } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const navigate = useNavigate(); 
+  // Redirect to the home page after successful sign in
+  const signinclick = () => { 
+    navigate("/signin");
+  }
+
   return (
     <>
       
@@ -65,7 +72,7 @@ const Navbar = () => {
           </div>
           {/* CTA Button section */}
           <div className="hidden lg:block space-x-6">
-            <button className="font-semibold">Sign in</button>
+            <button className="font-semibold" onClick={signinclick}>Sign in</button>
             <button className="text-white bg-secondary font-semibold rounded-full px-6 py-2 ">
               Register
             </button>

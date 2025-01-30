@@ -13,6 +13,7 @@ import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
 import HealthNewsPage from "./components/news/news"; // Ensure this file does NOT contain another <Router>
 import { Analytics } from "@vercel/analytics/react";
+import SignIn from "./Pages/Signin";
 
 const BannerData = {
   image: Img1,
@@ -68,6 +69,9 @@ const App = () => {
 
         {/* Health News Page - Now Separate */}
         <Route path="/health-news" element={<HealthNewsPage />} />
+        
+        {/* Sign In Page */}
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
       <Footer />
     </Router>
