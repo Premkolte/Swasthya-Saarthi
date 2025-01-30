@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import NavbarBanner from "./components/Navbar/NavbarBanner";
 import Hero from "./components/Hero/Hero";
@@ -10,6 +11,7 @@ import Banner from "./components/Banner/Banner";
 import SubjectCard from "./components/SubjectCard/SubjectCard";
 import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
+import HealthNewsPage from "./components/news/news"; // Ensure this file does NOT contain another <Router>
 import { Analytics } from "@vercel/analytics/react";
 
 const BannerData = {
@@ -41,20 +43,34 @@ const BannerData3 = {
 
 const App = () => {
   return (
-    <main className="overflow-x-hidden">
-      <Analytics/>
+    <Router>
+      <Analytics />
       <Navbar />
-      <NavbarBanner />
-      <Hero />
-      <NumberCounter />
-      <Banner {...BannerData} />
-      <Banner {...BannerData2} reverse={true} />
-      <Banner {...BannerData3} />
-      <SubjectCard />
-      <WhyChooseUs />
-      <Testimonial />
+      <Routes>
+        {/* Home Page */}
+        <Route
+          path="/"
+          element={
+            <>
+              <NavbarBanner />
+              <Hero />
+              <NumberCounter />
+              <Banner {...BannerData} />
+              <Banner {...BannerData2} reverse={true} />
+              <Banner {...BannerData3} />
+              <SubjectCard />
+              <HealthNewsPage />
+              <WhyChooseUs />
+              <Testimonial />
+            </>
+          }
+        />
+
+        {/* Health News Page - Now Separate */}
+        <Route path="/health-news" element={<HealthNewsPage />} />
+      </Routes>
       <Footer />
-    </main>
+    </Router>
   );
 };
 
