@@ -4,7 +4,7 @@ import { FaPlay } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { SlideRight } from "../../utility/animation";
 import { User } from "lucide-react";
-import bg from "../../assets/bg.webp";
+import bg from "../../assets/Swasthya Saarthi poster.png";
 const Hero = ({ userName, userImage }) => {
   return (
     <>
@@ -39,7 +39,7 @@ const Hero = ({ userName, userImage }) => {
               animate="visible"
               className="text-5xl font-semibold lg:text-6xl !leading-tight"
             >
-              Your Personal  <span className="text-primary">Health Companion</span>
+              Your Personal  <span className="text-blue-50">Health Companion</span>
             </motion.h1>
             <motion.p
               variants={SlideRight(0.8)}
