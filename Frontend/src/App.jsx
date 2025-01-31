@@ -11,6 +11,8 @@ import Banner from "./components/Banner/Banner";
 import SubjectCard from "./components/SubjectCard/SubjectCard";
 import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
+import About from "./Pages/about";
+import Contact from "./Pages/contactus";
 import HealthNewsPage from "./components/news/news"; // Ensure this file does NOT contain another <Router>
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
@@ -72,6 +74,11 @@ const App = () => {
         
         {/* Sign In Page */}
         <Route path="/signin" element={<SignIn />} />
+
+        {/* About Page */}
+        <Route path="/about" element={<About />} />
+        {/* Login Page */}
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
     </Router>
