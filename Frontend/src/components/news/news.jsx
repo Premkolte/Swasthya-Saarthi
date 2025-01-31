@@ -3,9 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const API_KEY = "pub_672007f5a5023ac7b067e69ad0491c0256297"; // Replace with your NewsData.io API Key
-const NEWS_URL = `https://newsdata.io/api/1/news?country=in&category=health&language=en&apikey=${API_KEY}`;
-
+const API_KEY = "9966d80f968ce7a9b06e0ca725fea8e7"; // Replace with your NewsData.io API Key
+const NEWS_URL = `https://gnews.io/api/v4/top-headlines?country=in&category=health&apikey=${API_KEY}`;
 
 const HealthNewsPage = () => {
   const [newsData, setNewsData] = useState([]);
