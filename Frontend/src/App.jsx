@@ -53,7 +53,7 @@ const BannerData3 = {
 
 const App = () => {
   return (
-    <HashRouter>
+    <Router>
    
       <Analytics />
       <Navbar />
@@ -107,7 +107,7 @@ const App = () => {
      
       <Footer />
   
-    </HashRouter>
+    </Router>
   );
 };
 
