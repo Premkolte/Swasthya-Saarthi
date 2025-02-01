@@ -14,7 +14,7 @@ import Footer from "./components/Footer/Footer";
 import About from "./Pages/about";
 import Contact from "./Pages/contactus";
 import HealthNewsPage from "./components/news/news"; 
-import Videos from "./Pages/videos";
+import Videos from "./Pages/video";
 import SignUp from "./Pages/Register";
 import Hospitals from "./Pages/Hospitals";
 import Docs from "./Pages/Docs";
