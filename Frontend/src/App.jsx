@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route , HashRouter} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import NavbarBanner from "./components/Navbar/NavbarBanner";
 import Hero from "./components/Hero/Hero";
@@ -53,9 +53,11 @@ const BannerData3 = {
 
 const App = () => {
   return (
-    <Router>
+    <HashRouter>
+   
       <Analytics />
       <Navbar />
+      
       <Routes>
         {/* Home Page */}
         <Route
@@ -102,8 +104,10 @@ const App = () => {
         <Route path="/scanner" element={<scanner />} />
         
       </Routes>
+     
       <Footer />
-    </Router>
+  
+    </HashRouter>
   );
 };
 
