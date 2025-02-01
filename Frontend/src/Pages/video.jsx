@@ -1,9 +1,9 @@
 import React from 'react'
 
-const video = () => {
+const Video = () => {
   return (
     <div>Page creation in Progress</div>
   )
 }
 
-export default video
+export default Video
