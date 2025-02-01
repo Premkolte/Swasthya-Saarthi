@@ -13,7 +13,14 @@ import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
 import About from "./Pages/about";
 import Contact from "./Pages/contactus";
-import HealthNewsPage from "./components/news/news"; // Ensure this file does NOT contain another <Router>
+import HealthNewsPage from "./components/news/news"; 
+import Videos from "./Pages/videos";
+import SignUp from "./Pages/Register";
+import Hospitals from "./Pages/Hospitals";
+import Docs from "./Pages/Docs";
+import Symptoms from "./Pages/Symptomchecker";
+import Medsinfo from "./Pages/Medsinfo";
+import scanner from "./Pages/scanner";
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
 
@@ -79,6 +86,21 @@ const App = () => {
         <Route path="/about" element={<About />} />
         {/* Login Page */}
         <Route path="/contact" element={<Contact />} />
+        {/* Videos Page */}
+        <Route path="/videos" element={<Videos />} />
+        {/* Register Page */}
+        <Route path="/signup" element={<SignUp />} />
+        {/* Hospitals Page */}
+        <Route path="/hospitals" element={<Hospitals />} />
+        {/* Doctors Page */}
+        <Route path="/doctors" element={<Docs />} />
+        {/* Symptoms Checker Page */}
+        <Route path="/symptoms" element={<Symptoms />} />
+        {/* Medicines Info Page */}
+        <Route path="/medicines" element={<Medsinfo />} />
+        {/* Scanner Page */}
+        <Route path="/scanner" element={<scanner />} />
+        
       </Routes>
       <Footer />
     </Router>
