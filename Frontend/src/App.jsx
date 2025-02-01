@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route , HashRouter} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import NavbarBanner from "./components/Navbar/NavbarBanner";
 import Hero from "./components/Hero/Hero";
@@ -13,17 +13,18 @@ import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
 import About from "./Pages/about";
 import Contact from "./Pages/contactus";
-import HealthNewsPage from "./components/news/news"; 
+import HealthNewsPage from "./components/news/news";
 import Videos from "./Pages/video";
 import SignUp from "./Pages/Register";
 import Hospitals from "./Pages/Hospitals";
 import Docs from "./Pages/Docs";
 import Symptoms from "./Pages/Symptomchecker";
 import Medsinfo from "./Pages/Medsinfo";
-import scanner from "./Pages/scanner";
+import Scanner from "./Pages/scanner"; // FIXED: Scanner should be uppercase
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
 
+// Banner Data for Sections
 const BannerData = {
   image: Img1,
   tag: "Personalized Health Monitoring",
@@ -54,12 +55,11 @@ const BannerData3 = {
 const App = () => {
   return (
     <Router>
-   
       <Analytics />
       <Navbar />
-      
+
       <Routes>
-        {/* Home Page */}
+        {/* 🏡 Home Page */}
         <Route
           path="/"
           element={
@@ -78,35 +78,31 @@ const App = () => {
           }
         />
 
-        {/* Health News Page - Now Separate */}
+        {/* 📰 Health News */}
         <Route path="/health-news" element={<HealthNewsPage />} />
-        
-        {/* Sign In Page */}
-        <Route path="/signin" element={<SignIn />} />
 
-        {/* About Page */}
-        <Route path="/about" element={<About />} />
-        {/* Login Page */}
-        <Route path="/contact" element={<Contact />} />
-        {/* Videos Page */}
-        <Route path="/videos" element={<Videos />} />
-        {/* Register Page */}
+        {/* 🔑 Authentication */}
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        {/* Hospitals Page */}
+
+        {/* 📜 About & Contact */}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* 🎥 Video Tutorials */}
+        <Route path="/videos" element={<Videos />} />
+
+        {/* 🏥 Healthcare Services */}
         <Route path="/hospitals" element={<Hospitals />} />
-        {/* Doctors Page */}
         <Route path="/doctors" element={<Docs />} />
-        {/* Symptoms Checker Page */}
+
+        {/* 🏥 Health Utilities */}
         <Route path="/symptoms" element={<Symptoms />} />
-        {/* Medicines Info Page */}
         <Route path="/medicines" element={<Medsinfo />} />
-        {/* Scanner Page */}
-        <Route path="/scanner" element={<scanner />} />
-        
+        <Route path="/scanner" element={<Scanner />} />
       </Routes>
-     
+
       <Footer />
-  
     </Router>
   );
 };

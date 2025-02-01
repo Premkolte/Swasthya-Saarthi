@@ -1,91 +1,136 @@
-import React from "react";
-import { NavbarMenu } from "../../mockData/data.js";
-import { useNavigate } from "react-router-dom";
-import { MdComputer, MdMenu } from "react-icons/md";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import logo from "../../../public/assets/Swasthya-Saarthi.png";
-import ResponsiveMenu from "./ResponsiveMenu.jsx";
-import GoogleTranslate  from "./Language.jsx";
+import { MdMenu, MdClose } from "react-icons/md";
+import { FaChevronDown } from "react-icons/fa";
+import GoogleTranslate from "./Language.jsx";
 import TextToSpeech from "./TexttoSpeach.jsx";
 import ThemeChange from "./Themechange.jsx";
-import { FaHighlighter, FaTextHeight } from "react-icons/fa";
+import logo from "../../../public/assets/Swasthya-Saarthi.png";
+
+// Navbar Menu Items
+const NavbarMenu = [
+  { id: 1, title: "Home", link: "/" },
+  { id: 2, title: "Meds Info", link: "/meds-info" },
+  { id: 3, title: "Symptom Checker", link: "/symptom-checker" },
+  { id: 4, title: "Contact Us", link: "/contact" },
+  { id: 5, title: "Local Health Info", link: "/local-health" },
+  { id: 6, title: "Medical Records", link: "/medical-records" },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const navigate = useNavigate(); 
-  // Redirect to the home page after successful sign in
-  const signinclick = () => { 
-    navigate("/signin");
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <>
-      
-    
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-      > 
-        <div className="flex items-center justify-between">
-        <div className="flex m-2 ml-2 space-x-4">
-        <FaHighlighter size={24} className="cursor-pointer hover:text-black" title="Highlight Text" />
-            <FaTextHeight
-              size={24}
-              className="cursor-pointer hover:text-black"
-              title="Text Resize"
-              onClick={() => setShowTextResizer(true)} // Show the Text Resizer popup
-            /> 
-            
-            <ThemeChange/>
-            <TextToSpeech/>
-          </div>
-          <div>
-            <GoogleTranslate/>
-          </div>
-        </div>
-
-        <div className="container flex justify-between items-center py-6">
-          
-          {/* Logo section */}
-          <div className="text-2xl flex items-center gap-2 font-bold">
-            {logo && <img src={logo} alt="logo" className="w-10 h-10" />}
-            <p>Swasthya Saarthi</p>
+      {/* Navbar Section */}
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-md sticky top-0 z-50"
+      >
+        <div className="container mx-auto flex items-center justify-between py-4 px-6">
+          {/* Left: Logo & Branding */}
+          <div className="flex items-center space-x-4">
+            <img src={logo} alt="Logo" className="w-10 h-10" />
+            <span className="text-xl font-bold text-gray-700">Swasthya Saarthi</span>
           </div>
 
-          {/* Menu section */}
-          <div className="hidden lg:block">
-            <ul className="flex items-center gap-6">
-              {NavbarMenu.map((item) => {
-                return (
-                  <li key={item.id}>
-                    <a
-                      href={item.link}
-                      className="inline-block text-gray-600 text-sm xl:text-base py-1 px-2 xl:px-3 hover:text-secondary transition-all duration-300 font-semibold"
+          {/* Center: Menu */}
+          <ul className="hidden lg:flex items-center space-x-6">
+            {NavbarMenu.map((item) => (
+              <li key={item.id} className="relative group">
+                <Link
+                  to={item.link}
+                  className="text-gray-700 font-medium hover:text-blue-600 transition relative after:block after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all after:duration-300 group-hover:after:w-full"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+
+            {/* Dropdown Example */}
+            <li className="relative group">
+              <button
+                className="text-gray-700 font-medium hover:text-blue-600 flex items-center space-x-1"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <span>More</span> <FaChevronDown />
+              </button>
+              {dropdownOpen && (
+                <motion.ul
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden"
+                >
+                  <li>
+                    <Link
+                      to="/resources"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
-                      {item.title}
-                    </a>
+                      Resources
+                    </Link>
                   </li>
-                );
-              })}
-            </ul>
-          </div>
-          {/* CTA Button section */}
-          <div className="hidden lg:block space-x-6">
-            <button className="font-semibold" onClick={signinclick}>Sign in</button>
-            <button className="text-white bg-secondary font-semibold rounded-full px-6 py-2 ">
-              Register
+                  <li>
+                    <Link
+                      to="/faq"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      FAQ
+                    </Link>
+                  </li>
+                </motion.ul>
+              )}
+            </li>
+          </ul>
+
+          {/* Right: Utility Icons */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <ThemeChange />
+            <TextToSpeech />
+            <GoogleTranslate />
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition">
+              Sign In
             </button>
           </div>
-          {/* Mobile Hamburger Menu */}
-          <div className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-            <MdMenu className="text-4xl" />
+
+          {/* Mobile Menu Toggle */}
+          <div className="lg:hidden">
+            <button onClick={() => setIsOpen(!isOpen)}>
+              <MdMenu className="text-3xl text-gray-700" />
+            </button>
           </div>
         </div>
-      </motion.div>
 
-      {/* mobile Sidebar section */}
-      <ResponsiveMenu isOpen={isOpen} />
+        {/* Mobile Dropdown Menu */}
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-gray-100 shadow-md"
+          >
+            <ul className="py-4 px-6 space-y-4">
+              {NavbarMenu.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={item.link}
+                    className="block text-gray-700 font-medium hover:text-blue-600 transition"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <button className="w-full py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+              Sign In
+            </button>
+          </motion.div>
+        )}
+      </motion.nav>
     </>
   );
 };
