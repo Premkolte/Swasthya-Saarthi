@@ -5,28 +5,28 @@ const TestimonialsData = [
   {
     id: 1,
     name: "John Doe",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Swasthya Saarthi has been a game-changer for me. The resources provided are incredibly helpful, and I feel more informed about my health choices.",
     img: "https://picsum.photos/101/101",
     delay: 0.2,
   },
   {
     id: 2,
     name: "Steve Smith",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "The platform is user-friendly and offers a wealth of information. I highly recommend it to anyone looking to improve their health literacy.",
     img: "https://picsum.photos/102/102",
     delay: 0.5,
   },
   {
     id: 3,
     name: "Kristen",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Thanks to Swasthya Saarthi, I was able to find the right healthcare services for my family. The testimonials and reviews helped me make informed decisions.",
     img: "https://picsum.photos/104/104",
     delay: 0.8,
   },
   {
-    id: 5,
+    id: 4,
     name: "Ariana",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "This platform has made accessing healthcare information so much easier. I appreciate the clear layout and the variety of resources available.",
     img: "https://picsum.photos/103/103",
     delay: 1.1,
   },
@@ -93,7 +93,7 @@ const Testimonial = () => {
                     <div className="flex justify-start items-center gap-5">
                       <img
                         src={item.img}
-                        alt=""
+                        alt={item.name}
                         className="w-16 h-16 rounded-full"
                       />
                       <div>
