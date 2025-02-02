@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MdMenu, MdClose } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
 import GoogleTranslate from "./Language.jsx";
 import TextToSpeech from "./TexttoSpeach.jsx";
@@ -24,7 +24,21 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar Section */}
+      {/* ✅ Accessibility Features (Above Navbar) */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-gray-100 py-2 px-6 flex justify-between items-center text-sm"
+      >
+        <div className="flex space-x-4">
+          <ThemeChange />
+          <TextToSpeech />
+        </div>
+        <GoogleTranslate />
+      </motion.div>
+
+      {/* ✅ Navbar Section */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,7 +46,7 @@ const Navbar = () => {
         className="bg-white shadow-md sticky top-0 z-50"
       >
         <div className="container mx-auto flex items-center justify-between py-4 px-6">
-          {/* Left: Logo & Branding */}
+          {/* Left: Logo */}
           <div className="flex items-center space-x-4">
             <img src={logo} alt="Logo" className="w-10 h-10" />
             <span className="text-xl font-bold text-gray-700">Swasthya Saarthi</span>
@@ -87,11 +101,8 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Right: Utility Icons */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <ThemeChange />
-            <TextToSpeech />
-            <GoogleTranslate />
+          {/* Right: Sign In Button */}
+          <div className="hidden lg:flex">
             <button className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition">
               Sign In
             </button>
