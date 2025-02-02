@@ -33,10 +33,13 @@ const TestimonialsData = [
 ];
 
 const Testimonial = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = TestimonialsData.length;
+
   const setting = {
     dots: true,
     arrow: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToScroll: 1,
     // autoplay: true,
@@ -44,6 +47,8 @@ const Testimonial = () => {
     cssEase: "linear",
     pauseOnHover: true,
     pauseOnFocus: true,
+    beforeChange: (current, next) => setCurrentSlide(next), // Update current slide
+
     responsive: [
       {
         breakpoint: 10000,
@@ -70,6 +75,12 @@ const Testimonial = () => {
       },
     ],
   };
+  const handleNextSlide = () => {
+    if (currentSlide < totalSlides - 1) {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
+  
   return (
     <div className="py-14 mb-10">
       <div className="container">
