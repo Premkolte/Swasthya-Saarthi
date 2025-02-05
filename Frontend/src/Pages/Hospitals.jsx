@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer/Footer';
+
 
 const Hospitals = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,7 +53,7 @@ const Hospitals = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <Navbar />
+     
       <div className="container mx-auto py-8">
         {/* Search Section */}
         <div className="mb-8">
@@ -128,7 +127,7 @@ const Hospitals = () => {
           )}
         </div>
       </div>
-      <Footer />
+      
     </div>
   );
 };
