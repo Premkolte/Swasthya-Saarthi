@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { 
   FaHeartbeat, FaHospital, FaSyringe, FaPills, 
   FaNotesMedical, FaVideo, FaBookMedical, FaNewspaper 
-} from "react-icons/fa6";
+} from "react-icons/fa";
 
 const featureList = [
   {
