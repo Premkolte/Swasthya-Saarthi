@@ -15,6 +15,7 @@ import About from "./Pages/about";
 import Contact from "./Pages/contactus";
 import MedicalTermsSection from "./Pages/learn";
 import EmergencyContactSection from "./Pages/Emergency";
+import LocalHealthInfo from "./Pages/localinfo";
 import HealthNewsPage from "./components/news/news";
 import Videos from "./Pages/video";
 import SignUp from "./Pages/Register";
@@ -111,6 +112,9 @@ const App = () => {
         
         
         <Route path="/medical-terms" element={<MedicalTermsSection />} />
+        
+        <Route path="/local-health" element={<LocalHealthInfo />} />
+
       </Routes>
 
       <Footer />
