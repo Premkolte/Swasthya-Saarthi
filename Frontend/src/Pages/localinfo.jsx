@@ -1,141 +1,118 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const LocalHealthInfoSection = () => {
-  const data = {
-    hospitals: [
-      { location: "Bhopal", name: "AIIMS Bhopal" },
-      { location: "Mumbai", name: "Kokilaben Dhirubhai Ambani Hospital" },
-      { location: "Delhi", name: "Sir Ganga Ram Hospital" },
-    ],
-    ambulanceServices: [
-      { location: "Bhopal", name: "108 Ambulance Service" },
-      { location: "Mumbai", name: "Mumbai Ambulance Service" },
-      { location: "Delhi", name: "CureFast Ambulance" },
-    ],
-    doctors: [
-      { location: "Bhopal", name: "Dr. Neha Sharma (Cardiologist)" },
-      { location: "Mumbai", name: "Dr. Rajesh Mehta (Orthopedist)" },
-      { location: "Delhi", name: "Dr. Anil Grover (Oncologist)" },
-    ],
-  };
+const LocalHealthInfo = () => {
+  const [hospitalSearch, setHospitalSearch] = useState("");
+  const [ambulanceSearch, setAmbulanceSearch] = useState("");
+  const [doctorSearch, setDoctorSearch] = useState("");
+  const [results, setResults] = useState([]);
 
-  const [hospitalQuery, setHospitalQuery] = useState("");
-  const [ambulanceQuery, setAmbulanceQuery] = useState("");
-  const [doctorQuery, setDoctorQuery] = useState("");
-  const [filteredHospitals, setFilteredHospitals] = useState([]);
-  const [filteredAmbulances, setFilteredAmbulances] = useState([]);
-  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const API_KEY = "YOUR_GOOGLE_API_KEY_HERE"; // Replace with your actual API key
 
-  const handleHospitalSearch = () => {
-    setFilteredHospitals(
-      data.hospitals.filter((item) =>
-        item.location.toLowerCase().includes(hospitalQuery.toLowerCase())
-      )
-    );
-  };
+  const handleSearch = async (type) => {
+    let keyword;
+    if (type === "hospital") keyword = hospitalSearch;
+    else if (type === "ambulance") keyword = ambulanceSearch;
+    else keyword = doctorSearch;
 
-  const handleAmbulanceSearch = () => {
-    setFilteredAmbulances(
-      data.ambulanceServices.filter((item) =>
-        item.location.toLowerCase().includes(ambulanceQuery.toLowerCase())
-      )
-    );
-  };
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/textsearch/json`,
+        {
+          params: {
+            query: `${keyword} ${type}`,
+            key: API_KEY,
+          },
+        }
+      );
 
-  const handleDoctorSearch = () => {
-    setFilteredDoctors(
-      data.doctors.filter((item) =>
-        item.location.toLowerCase().includes(doctorQuery.toLowerCase())
-      )
-    );
+      setResults(response.data.results || []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setResults([]);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
-      <h1 className="text-4xl font-bold text-center mb-8">Local Health Information</h1>
-      <p className="text-center mb-8 text-lg text-gray-700">
-        Search for health services near you by location.
-      </p>
-
-      {/* Search Sections */}
+    <div className="min-h-screen p-8 bg-blue-50">
+      <h1 className="text-4xl font-bold text-center mb-10">Local Health Information</h1>
       <div className="space-y-8">
-        {/* Hospitals Section */}
-        <div className="bg-white p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-blue-600">Nearby Hospitals</h2>
-          <input
-            type="text"
-            className="border border-gray-300 p-2 rounded-lg w-full focus:ring focus:ring-blue-400"
-            placeholder="Enter location for hospitals"
-            value={hospitalQuery}
-            onChange={(e) => setHospitalQuery(e.target.value)}
-          />
-          <button
-            onClick={handleHospitalSearch}
-            className="bg-blue-600 text-white mt-3 px-4 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Search Hospitals
-          </button>
-          <ul className="mt-4 list-disc ml-6 text-gray-700">
-            {filteredHospitals.length > 0 ? (
-              filteredHospitals.map((item, index) => <li key={index}>{item.name}</li>)
-            ) : (
-              <li>No hospitals found for this location.</li>
-            )}
-          </ul>
+        {/* Hospital Search */}
+        <div className="p-6 bg-white rounded-2xl shadow-md">
+          <h2 className="text-2xl font-semibold mb-4">Search Nearby Hospitals</h2>
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder="Enter location or keyword..."
+              value={hospitalSearch}
+              onChange={(e) => setHospitalSearch(e.target.value)}
+              className="w-full border rounded-md p-2"
+            />
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              onClick={() => handleSearch("hospital")}
+            >
+              Search
+            </button>
+          </div>
         </div>
 
-        {/* Ambulance Section */}
-        <div className="bg-white p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-red-600">Ambulance Services</h2>
-          <input
-            type="text"
-            className="border border-gray-300 p-2 rounded-lg w-full focus:ring focus:ring-red-400"
-            placeholder="Enter location for ambulance services"
-            value={ambulanceQuery}
-            onChange={(e) => setAmbulanceQuery(e.target.value)}
-          />
-          <button
-            onClick={handleAmbulanceSearch}
-            className="bg-red-600 text-white mt-3 px-4 py-2 rounded-lg hover:bg-red-700"
-          >
-            Search Ambulance
-          </button>
-          <ul className="mt-4 list-disc ml-6 text-gray-700">
-            {filteredAmbulances.length > 0 ? (
-              filteredAmbulances.map((item, index) => <li key={index}>{item.name}</li>)
-            ) : (
-              <li>No ambulance services found for this location.</li>
-            )}
-          </ul>
+        {/* Ambulance Search */}
+        <div className="p-6 bg-white rounded-2xl shadow-md">
+          <h2 className="text-2xl font-semibold mb-4">Search Ambulance Services</h2>
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder="Enter location or keyword..."
+              value={ambulanceSearch}
+              onChange={(e) => setAmbulanceSearch(e.target.value)}
+              className="w-full border rounded-md p-2"
+            />
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              onClick={() => handleSearch("ambulance")}
+            >
+              Search
+            </button>
+          </div>
         </div>
 
-        {/* Doctors Section */}
-        <div className="bg-white p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-green-600">Available Doctors</h2>
-          <input
-            type="text"
-            className="border border-gray-300 p-2 rounded-lg w-full focus:ring focus:ring-green-400"
-            placeholder="Enter location for doctors"
-            value={doctorQuery}
-            onChange={(e) => setDoctorQuery(e.target.value)}
-          />
-          <button
-            onClick={handleDoctorSearch}
-            className="bg-green-600 text-white mt-3 px-4 py-2 rounded-lg hover:bg-green-700"
-          >
-            Search Doctors
-          </button>
-          <ul className="mt-4 list-disc ml-6 text-gray-700">
-            {filteredDoctors.length > 0 ? (
-              filteredDoctors.map((item, index) => <li key={index}>{item.name}</li>)
-            ) : (
-              <li>No doctors found for this location.</li>
-            )}
-          </ul>
+        {/* Doctor Search */}
+        <div className="p-6 bg-white rounded-2xl shadow-md">
+          <h2 className="text-2xl font-semibold mb-4">Search Nearby Doctors</h2>
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder="Enter location or keyword..."
+              value={doctorSearch}
+              onChange={(e) => setDoctorSearch(e.target.value)}
+              className="w-full border rounded-md p-2"
+            />
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              onClick={() => handleSearch("doctor")}
+            >
+              Search
+            </button>
+          </div>
         </div>
+
+        {/* Results Section */}
+        {results.length > 0 && (
+          <div className="mt-8 p-6 bg-green-50 rounded-md">
+            <h2 className="text-2xl font-semibold mb-4">Search Results:</h2>
+            <ul className="list-disc ml-6 space-y-2">
+              {results.map((result, index) => (
+                <li key={index} className="text-lg text-gray-800">
+                  <span className="font-semibold">{result.name}</span> - {result.formatted_address}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default LocalHealthInfoSection;
+export default LocalHealthInfo;
