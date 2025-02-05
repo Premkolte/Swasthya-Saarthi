@@ -13,6 +13,8 @@ import Testimonial from "./components/Testimonial/Testimonial";
 import Footer from "./components/Footer/Footer";
 import About from "./Pages/about";
 import Contact from "./Pages/contactus";
+import MedicalTermsSection from "./Pages/learn";
+import EmergencyContactSection from "./Pages/Emergency";
 import HealthNewsPage from "./components/news/news";
 import Videos from "./Pages/video";
 import SignUp from "./Pages/Register";
@@ -100,6 +102,15 @@ const App = () => {
         <Route path="/symptoms" element={<Symptoms />} />
         <Route path="/medicines" element={<Medsinfo />} />
         <Route path="/scanner" element={<Scanner />} />
+          
+        {/* 🚨 Emergency Contacts */}
+
+        <Route path="/emergency-contacts" element={<EmergencyContactSection />} />
+        
+        {/* 📚 Medical Terms */}
+        
+        
+        <Route path="/medical-terms" element={<MedicalTermsSection />} />
       </Routes>
 
       <Footer />
