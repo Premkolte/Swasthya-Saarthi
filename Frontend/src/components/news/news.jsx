@@ -3,22 +3,33 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const API_KEY = "9966d80f968ce7a9b06e0ca725fea8e7"; // Replace with your NewsData.io API Key
-const NEWS_URL = `https://gnews.io/api/v4/top-headlines?country=in&category=health&apikey=${API_KEY}`;
+const API_KEY = "9966d80f968ce7a9b06e0ca725fea8e7"; // Replace with valid GNews API Key
+const NEWS_URL = `https://gnews.io/api/v4/top-headlines?category=health&lang=en&country=in&apikey=${API_KEY}`;
 
 const HealthNewsPage = () => {
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchNews = async (retryCount = 3) => {
       try {
         const response = await axios.get(NEWS_URL);
-        if (response.data.results) {
-          setNewsData(response.data.results.slice(0, 3)); // Display 3 news articles
+        console.log("API Response:", response.data); // Debugging
+
+        if (response.data.articles) {
+          setNewsData(response.data.articles.slice(0, 3)); // Display 3 news articles
+        } else {
+          setError("No articles found.");
         }
-      } catch (error) {
-        console.error("Error fetching news:", error);
+      } catch (err) {
+        if (err.response && err.response.status === 429 && retryCount > 0) {
+          console.warn(`Rate limit hit. Retrying in 5 seconds... (${retryCount} retries left)`);
+          setTimeout(() => fetchNews(retryCount - 1), 5000); // Wait 5 seconds before retrying
+        } else {
+          console.error("Error fetching news:", err);
+          setError("Failed to fetch news. Please try again later.");
+        }
       } finally {
         setLoading(false);
       }
@@ -40,6 +51,19 @@ const HealthNewsPage = () => {
     );
   }
 
+  if (error) {
+    return (
+      <motion.div
+        className="text-center p-6 text-red-600 text-xl font-semibold"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        {error}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className="container mx-auto p-6"
@@ -57,13 +81,24 @@ const HealthNewsPage = () => {
             className="border p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300"
             whileHover={{ scale: 1.02 }}
           >
-            {news.image_url && (
+
+            // isko dummy image lagake fic karna hai
+            {news.image ? (
               <img
-                src={news.image_url}
+                src={news.image}
                 alt={news.title}
+                className="w-full h-48 object-cover rounded-md mb-4"
+                onError={(e) => { e.target.src = "https://via.placeholder.com/300"; }} // Fallback Image
+              />
+            ) : (
+              <img
+                src="https://via.placeholder.com/300" // Default placeholder
+                alt="Default News"
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
             )}
+
+
             <h3 className="text-xl font-semibold">{news.title}</h3>
             <p className="text-gray-600 mt-2">{news.description}</p>
             <motion.div
@@ -72,7 +107,7 @@ const HealthNewsPage = () => {
               transition={{ duration: 0.3 }}
             >
               <Link
-                to={news.link}
+                to={news.url}
                 target="_blank"
                 className="text-blue-600 font-semibold text-lg hover:underline"
               >
