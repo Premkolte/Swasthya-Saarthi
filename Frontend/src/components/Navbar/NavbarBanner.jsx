@@ -11,9 +11,8 @@ const NavbarBanner = () => {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="bg-primary text-sm text-center font-semibold p-1 hidden lg:block relative"
       >
-        Are you a university or school student for an online tutoring
-        partnership?
-        <a href="#" className="text-secondary ml-2">
+        Are you in an emergency and finding it difficult to get the right information? 
+        <a href="/contact" className="text-secondary ml-2">
           Talk to us
         </a>
         <div

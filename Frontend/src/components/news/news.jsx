@@ -10,33 +10,37 @@ const HealthNewsPage = () => {
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [retryCount, setRetryCount] = useState(3);
 
   useEffect(() => {
-    const fetchNews = async (retryCount = 3) => {
+    const fetchNews = async () => {
       try {
         const response = await axios.get(NEWS_URL);
-        console.log("API Response:", response.data); // Debugging
+        console.log("API Response:", response.data);
 
         if (response.data.articles) {
           setNewsData(response.data.articles.slice(0, 3)); // Display 3 news articles
+          setError("");
         } else {
           setError("No articles found.");
         }
       } catch (err) {
         if (err.response && err.response.status === 429 && retryCount > 0) {
           console.warn(`Rate limit hit. Retrying in 5 seconds... (${retryCount} retries left)`);
-          setTimeout(() => fetchNews(retryCount - 1), 5000); // Wait 5 seconds before retrying
+          setRetryCount((prev) => prev - 1);
+          setTimeout(fetchNews, 5000);
+          return;
         } else {
           console.error("Error fetching news:", err);
           setError("Failed to fetch news. Please try again later.");
         }
       } finally {
-        setLoading(false);
+        if (retryCount === 0) setLoading(false);
       }
     };
 
     fetchNews();
-  }, []);
+  }, [retryCount]);
 
   if (loading) {
     return (
@@ -81,23 +85,20 @@ const HealthNewsPage = () => {
             className="border p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300"
             whileHover={{ scale: 1.02 }}
           >
-
-            // isko dummy image lagake fic karna hai
             {news.image ? (
               <img
                 src={news.image}
                 alt={news.title}
                 className="w-full h-48 object-cover rounded-md mb-4"
-                onError={(e) => { e.target.src = "https://via.placeholder.com/300"; }} // Fallback Image
+                onError={(e) => { e.target.src = "https://via.placeholder.com/300"; }}
               />
             ) : (
               <img
-                src="https://via.placeholder.com/300" // Default placeholder
+                src="https://via.placeholder.com/300"
                 alt="Default News"
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
             )}
-
 
             <h3 className="text-xl font-semibold">{news.title}</h3>
             <p className="text-gray-600 mt-2">{news.description}</p>

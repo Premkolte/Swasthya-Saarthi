@@ -1,28 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Swasthya Saarthi - Your personalized healthcare companion offering AI-powered tools for symptom analysis, emergency guidance, and localized healthcare information." />
-    <meta name="keywords" content="Swasthya Saarthi, healthcare app, symptom analysis, emergency health guidance, personalized health dashboard, multilingual healthcare, AI healthcare, medicine scanner, localized health updates" />
+    <meta name="description" content="Swasthya Saarthi - Your personalized healthcare companion." />
+    <meta name="keywords" content="Swasthya Saarthi, healthcare app, AI healthcare" />
     <meta name="author" content="Swasthya Saarthi Team" />
-
-    <!-- Title -->
     <title>Swasthya Saarthi - Empowering Your Health Journey</title>
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/Swasthya-Saarthi.png" />
-
-    <!-- Canonical Link -->
     <link rel="canonical" href="https://swasthya-saarthi.vercel.app/" />
-
-    <!-- Fonts and Styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
-    
-    <!-- Inline Styles for Preloader with Fade Animations -->
     <style>
-      /* Preloader container */
       #preloader {
         position: fixed;
         top: 0;
@@ -35,80 +23,50 @@
         justify-content: center;
         align-items: center;
         z-index: 9999;
-        opacity: 1;
         transition: opacity 0.5s ease;
       }
-      /* Fade-out effect */
       #preloader.fade-out {
         opacity: 0;
         pointer-events: none;
       }
-      /* Logo styling with fade-in animation */
       #logo {
         width: 100px;
         margin-bottom: 20px;
-        animation: fadeIn 0.5s ease-in-out;
+        animation: fadeInOut 2s infinite;
       }
-      /* Text styling with fade-in animation */
       #preloader h1 {
         font-family: 'Inter', sans-serif;
         color: #007BFF;
         font-size: 1.5rem;
-        animation: fadeIn 0.5s ease-in-out;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      /* Responsive adjustments */
-      @media (max-width: 600px) {
-        #logo {
-          width: 70px;
-        }
-        #preloader h1 {
-          font-size: 1.2rem;
-        }
-      }
-
-      #logo,
-      #preloader h1 {
-        animation: fadeInOut 3s ease-in-out forwards;
+        animation: fadeInOut 2s infinite;
       }
       @keyframes fadeInOut {
-        0% { opacity: 0; }
-        20% { opacity: 1; }
-        80% { opacity: 1; }
-        100% { opacity: 0; }
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+      @media (max-width: 600px) {
+        #logo { width: 70px; }
+        #preloader h1 { font-size: 1.2rem; }
       }
     </style>
   </head>
-  
   <body>
-    <!-- Preloader -->
     <div id="preloader">
       <img id="logo" src="/assets/Swasthya-Saarthi.png" alt="Loading..." />
       <h1>Swasthya Saarthi</h1>
     </div>
-
-    <!-- Root for React App -->
     <div id="root"></div>
-    
-    <!-- Preloader Fade Out Script -->
     <script>
       window.addEventListener('load', function() {
         const preloader = document.getElementById('preloader');
-        // Wait for 1 second after load, then fade out
         setTimeout(() => {
           preloader.classList.add('fade-out');
         }, 1000);
-        // Remove preloader from DOM after transition completes
         setTimeout(() => {
           preloader.style.display = 'none';
-        }, 1600);
+        }, 1500);
       });
     </script>
-    
-    <!-- React App Entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -59,10 +59,11 @@ const BannerData3 = {
 const App = () => {
   return (
     <Router>
+      <main className="overflow-x-hidden">
       <Analytics />
-      <Navbar />
-
-      <Routes>
+      <Navbar className="text-black bg-white dark:bg-gray-800 dark:text-white"/>
+      <main className="text-black bg-white dark:bg-gray-800 dark:text-white">
+      <Routes className="text-black bg-white dark:bg-gray-800 dark:text-white">
         {/* 🏡 Home Page */}
         <Route
           path="/"
@@ -117,8 +118,10 @@ const App = () => {
         <Route path="/local-health" element={<LocalHealthInfo />} />
 
       </Routes>
-
+          
       <Footer />
+      </main>
+      </main>
     </Router>
   );
 };
