@@ -7,6 +7,7 @@ import NumberCounter from "./components/NumberCounter/NumberCounter";
 import WhyChooseUs from "./components/WhyChooseUs/WhyChooseUs";
 import Img1 from "./assets/banner1.png";
 import Img2 from "./assets/banner2.png";
+import Img3 from "./assets/banner3.png";
 import Banner from "./components/Banner/Banner";
 import SubjectCard from "./components/SubjectCard/SubjectCard";
 import Testimonial from "./components/Testimonial/Testimonial";
@@ -47,7 +48,7 @@ const BannerData2 = {
 };
 
 const BannerData3 = {
-  image: Img1,
+  image: Img3,
   tag: "Medical Order Record",
   title: "Easily Manage and Track Your Medical Orders",
   subtitle:
