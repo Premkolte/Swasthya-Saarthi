@@ -17,12 +17,14 @@ const HealthNewsPage = () => {
       try {
         const response = await axios.get(NEWS_URL);
         console.log("API Response:", response.data);
-
-        if (response.data.articles) {
+  
+        if (response.data.articles && response.data.articles.length > 0) {
           setNewsData(response.data.articles.slice(0, 3)); // Display 3 news articles
           setError("");
+          setLoading(false); // ✅ Set loading to false on success
         } else {
           setError("No articles found.");
+          setLoading(false);
         }
       } catch (err) {
         if (err.response && err.response.status === 429 && retryCount > 0) {
@@ -33,14 +35,14 @@ const HealthNewsPage = () => {
         } else {
           console.error("Error fetching news:", err);
           setError("Failed to fetch news. Please try again later.");
+          setLoading(false); // ✅ Ensure loading is set to false on error
         }
-      } finally {
-        if (retryCount === 0) setLoading(false);
       }
     };
-
+  
     fetchNews();
-  }, [retryCount]);
+  }, []); 
+  
 
   if (loading) {
     return (
