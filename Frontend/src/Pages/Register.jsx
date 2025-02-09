@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext"; // Adjust the import path as needed
+import { useAuth } from "../context/AuthContext"; 
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {

@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import { useNavigate } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { account } from "../utils/Config";
 
@@ -11,46 +10,48 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate(); // ✅ Use React Router's navigate function
 
   useEffect(() => {
     checkUserStatus();
   }, []);
 
-  // ✅ Login Function
-  const loginUser = async (userInfo) => {
+  // ✅ Login Function (Receives navigate from the component)
+  const loginUser = async (userInfo, navigate) => {
     try {
       setLoading(true);
-      const response = await account.createEmailPasswordSession(userInfo.email, userInfo.password);
+      const response = await account.createEmailPasswordSession(
+        userInfo.email,
+        userInfo.password
+      );
       const accountDetails = await account.get();
       setUser(accountDetails);
       setLoading(false);
+      navigate("/"); // ✅ Redirect inside the component
     } catch (error) {
       console.error("Login Error: ", error.message);
       setErrorMessage(error.message);
-      navigate("/login"); // ✅ Redirect using React Router
       setLoading(false);
     }
   };
 
-  // ✅ Logout Function
-  const logoutUser = async () => {
+  // ✅ Logout Function (Receives navigate from the component)
+  const logoutUser = async (navigate) => {
     try {
-      await account.deleteSession("current"); // ✅ Ensure session deletion is awaited
+      await account.deleteSession("current");
       setUser(null);
-      navigate("/login"); // ✅ Redirect after logout
+      navigate("/login"); // ✅ Redirect inside the component
     } catch (error) {
       console.error("Logout Error:", error.message);
       setErrorMessage("Failed to log out. Please try again.");
     }
   };
 
-  // ✅ Register Function (Placeholder)
-  const registerUser = async (userData) => {
+  // ✅ Register Function (Receives navigate)
+  const registerUser = async (userData, navigate) => {
     try {
       setLoading(true);
-      const newUser = await account.create(userData.email, userData.password, userData.name);
-      await loginUser(userData); // ✅ Auto-login after registration
+      await account.create(userData.email, userData.password, userData.name);
+      await loginUser(userData, navigate); // ✅ Auto-login after registration
     } catch (error) {
       setErrorMessage(error.message);
       console.error("Registration Error:", error.message);
@@ -82,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       <ErrorContext.Provider value={{ errorMessage, setErrorMessage }}>
         {loading ? (
           <div className="flex justify-center items-center h-screen">
-            <ReactLoading type="spin" color="#ed8936" height="10%" width="10%" />
+            <ReactLoading type="spin" color="blue" height="10%" width="10%" />
           </div>
         ) : (
           children
