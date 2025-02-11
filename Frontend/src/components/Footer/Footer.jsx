@@ -2,7 +2,7 @@ import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdComputer } from "react-icons/md";
-import FooterImg from "../../assets/footer.jpg";
+import FooterImg from "../../assets/footer.png";
 
 const FooterBg = {
   backgroundImage: `url(${FooterImg})`,
