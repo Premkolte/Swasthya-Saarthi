@@ -27,7 +27,7 @@ import Medsinfo from "./Pages/Medsinfo";
 import Scanner from "./Pages/scanner"; // FIXED: Scanner should be uppercase
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
-
+import DocVault from "./DocVault/DocVault";
 // Banner Data for Sections
 const BannerData = {
   image: Img1,
@@ -116,6 +116,10 @@ const App = () => {
         <Route path="/medical-terms" element={<MedicalTermsSection />} />
         
         <Route path="/local-health" element={<LocalHealthInfo />} />
+        
+        {/* 📁 Document Vault */
+        <Route path="/docvault" element={<DocVault />} />
+        }
 
       </Routes>
           

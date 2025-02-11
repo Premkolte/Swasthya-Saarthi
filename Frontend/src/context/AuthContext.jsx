@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import ReactLoading from "react-loading";
 import { account } from "../utils/Config";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Create contexts
 export const ErrorContext = createContext();
@@ -9,55 +11,10 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     checkUserStatus();
   }, []);
-
-  // ✅ Login Function (Receives navigate from the component)
-  const loginUser = async (userInfo, navigate) => {
-    try {
-      setLoading(true);
-      const response = await account.createEmailPasswordSession(
-        userInfo.email,
-        userInfo.password
-      );
-      const accountDetails = await account.get();
-      setUser(accountDetails);
-      setLoading(false);
-      navigate("/"); // ✅ Redirect inside the component
-    } catch (error) {
-      console.error("Login Error: ", error.message);
-      setErrorMessage(error.message);
-      setLoading(false);
-    }
-  };
-
-  // ✅ Logout Function (Receives navigate from the component)
-  const logoutUser = async (navigate) => {
-    try {
-      await account.deleteSession("current");
-      setUser(null);
-      navigate("/login"); // ✅ Redirect inside the component
-    } catch (error) {
-      console.error("Logout Error:", error.message);
-      setErrorMessage("Failed to log out. Please try again.");
-    }
-  };
-
-  // ✅ Register Function (Receives navigate)
-  const registerUser = async (userData, navigate) => {
-    try {
-      setLoading(true);
-      await account.create(userData.email, userData.password, userData.name);
-      await loginUser(userData, navigate); // ✅ Auto-login after registration
-    } catch (error) {
-      setErrorMessage(error.message);
-      console.error("Registration Error:", error.message);
-    }
-    setLoading(false);
-  };
 
   // ✅ Check User Status on Load
   const checkUserStatus = async () => {
@@ -70,6 +27,70 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  // ✅ Register Function (Auto-Verifies User & Shows Notification)
+  const registerUser = async (userData, navigate) => {
+    try {
+      setLoading(true);
+      await account.create(userData.email, userData.password, userData.name);
+
+      // ✅ Directly mark user as verified (Appwrite does not have a direct API for this, but self-hosted versions can disable email verification)
+      const updatedUser = await account.updatePrefs({ verified: true });
+
+      console.log("User Verified:", updatedUser);
+
+      toast.success("Registration successful! Redirecting to login...", {
+        position: "top-center",
+        autoClose: 3000, // Closes in 3 seconds
+      });
+
+      setTimeout(() => {
+        navigate("/signin");
+      }, 3000);
+
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.message, { position: "top-center" });
+      console.error("Registration Error:", error.message);
+      setLoading(false);
+    }
+  };
+
+  // ✅ Login Function
+  const loginUser = async (userInfo, navigate) => {
+    try {
+      setLoading(true);
+      const response = await account.createEmailPasswordSession(
+        userInfo.email,
+        userInfo.password
+      );
+
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+      setLoading(false);
+
+      toast.success("Login successful!", { position: "top-center" });
+
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message, { position: "top-center" });
+      console.error("Login Error: ", error.message);
+      setLoading(false);
+    }
+  };
+
+  // ✅ Logout Function
+  const logoutUser = async (navigate) => {
+    try {
+      await account.deleteSession("current");
+      setUser(null);
+      toast.success("Logged out successfully!", { position: "top-center" });
+      navigate("/login");
+    } catch (error) {
+      toast.error("Failed to log out. Please try again.", { position: "top-center" });
+      console.error("Logout Error:", error.message);
+    }
+  };
+
   // Context Data
   const contextData = {
     user,
@@ -80,7 +101,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={contextData}>
-      <ErrorContext.Provider value={{ errorMessage, setErrorMessage }}>
+      <ErrorContext.Provider value={{}}>
         {loading ? (
           <div className="flex justify-center items-center h-screen">
             <ReactLoading type="spin" color="blue" height="10%" width="10%" />

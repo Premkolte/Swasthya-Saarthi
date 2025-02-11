@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaUserMd, FaEnvelope, FaLock } from "react-icons/fa";
 
 const Register = () => {
   const { registerUser } = useAuth();
@@ -11,118 +14,86 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ 
-      ...formData, 
-      [e.target.name]: e.target.value 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basic client-side validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
       return;
     }
-    setError("");
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+    
     try {
-      await registerUser({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
-      navigate("/"); // Redirect to home page after successful registration
+      await registerUser(formData, navigate);
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">Register</h2>
-        {error && (
-          <div className="bg-red-100 text-red-600 p-2 rounded mb-4">
-            {error}
-          </div>
-        )}
-        <form onSubmit={handleSubmit}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 to-blue-50">
+      <ToastContainer />
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-xl border-t-4 border-blue-500">
+        <h2 className="text-2xl font-bold text-green-700 text-center flex items-center justify-center gap-2">
+          <FaUserMd /> Register
+        </h2>
+        <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
-              Name
+            <label className="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
+              <FaUserMd /> Name
             </label>
             <input
               type="text"
-              id="name"
               name="name"
               placeholder="Enter your full name"
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-green-500"
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
-              Email
+            <label className="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
+              <FaEnvelope /> Email
             </label>
             <input
               type="email"
-              id="email"
               name="email"
               placeholder="Enter your email address"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-green-500"
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
-              Password
+            <label className="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
+              <FaLock /> Password
             </label>
             <input
               type="password"
-              id="password"
               name="password"
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-green-500"
             />
           </div>
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block text-gray-700 font-semibold mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm your password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition duration-300"
-          >
+          <button type="submit" className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition duration-300">
             Register
           </button>
         </form>
-        <p className="mt-4 text-center text-gray-600">
-          Already have an account?{" "}
-          <Link to="/signin" className="text-blue-600 hover:underline">
-            Sign In
-          </Link>
-        </p>
       </div>
     </div>
   );

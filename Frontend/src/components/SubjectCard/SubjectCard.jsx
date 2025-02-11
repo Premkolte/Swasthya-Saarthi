@@ -45,7 +45,7 @@ const featureList = [
     icon: <FaNotesMedical />,
     color: "#075267",
     delay: 0.6,
-    route: "/medical-records",
+    route: "/docvault",
   },
   {
     id: 6,

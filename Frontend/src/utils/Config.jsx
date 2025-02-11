@@ -1,19 +1,15 @@
 import { Client, Account, Databases, ID } from "appwrite";
 
 // Initialize Appwrite client
-const client = new Client();
-
-client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Endpoint URL
-  .setProject("679e6a020024b4e3be09"); // Your Appwrite project ID
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1") // ✅ Ensure correct endpoint
+  .setProject("679e6a020024b4e3be09"); // ✅ Replace with your actual Appwrite project ID
 
 // Initialize services
 export const account = new Account(client);
 export const database = new Databases(client);
 
-// Export a function for generating a unique ID (random string)
-export const uniqueId = () => {
-  return Math.random().toString(36).substr(2, 9); // Generates a random 9-character string
-};
+// ✅ Generate a Unique ID using Appwrite's built-in method
+export const uniqueId = () => ID.unique();
 
-export default client; // Default export for the Appwrite client
+export default client;
