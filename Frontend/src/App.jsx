@@ -23,7 +23,7 @@ import SignUp from "./Pages/Register";
 import Hospitals from "./Pages/Hospitals";
 import Docs from "./Pages/Docs";
 import Symptoms from "./Pages/Symptomchecker";
-import Medsinfo from "./Pages/Medsinfo";
+import MedsInfoMain from "./MedsInfo/MedsInfoMain";
 import Scanner from "./Pages/scanner"; // FIXED: Scanner should be uppercase
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
@@ -105,7 +105,7 @@ const App = () => {
         <Route path="/symptoms" element={<Symptoms />} />
         <Route path="/medicines" element={<Medsinfo />} />
         <Route path="/scanner" element={<Scanner />} />
-          
+          <Route path="/meds-info" element={<MedsInfoMain />} />
         {/* 🚨 Emergency Contacts */}
 
         <Route path="/emergency-contacts" element={<EmergencyContactSection />} />

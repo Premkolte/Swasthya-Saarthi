@@ -3,56 +3,62 @@ import CountUp from "react-countup";
 
 const NumberCounter = () => {
   return (
-    <div className="bg-secondary text-white py-12">
-      <div className="container grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div className="bg-blue-600 text-white py-12">
+      <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold">
+          <p className="text-4xl font-bold">
             <CountUp
               start={0}
-              end={898}
+              end={500}
               duration={3}
               enableScrollSpy={true}
               scrollSpyOnce={true}
-            />
-          </p>
-          <p>Expert tutors</p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold">
-            <CountUp
-              end={20000}
               separator=","
               suffix="+"
+            />
+          </p>
+          <p className="mt-2 text-lg">Hospitals Covered</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-4xl font-bold">
+            <CountUp
+              start={0}
+              end={10000}
               duration={3}
               enableScrollSpy={true}
               scrollSpyOnce={true}
-            />
-          </p>
-          <p>Hours content</p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold">
-            <CountUp
-              end={298}
-              duration={3}
-              enableScrollSpy={true}
-              scrollSpyOnce={true}
-            />
-          </p>
-          <p>Subject and courses</p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-3xl font-semibold">
-            <CountUp
-              end={72878}
               separator=","
               suffix="+"
+            />
+          </p>
+          <p className="mt-2 text-lg">Users Benefited</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-4xl font-bold">
+            <CountUp
+              start={0}
+              end={12}
               duration={3}
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              suffix="+"
             />
           </p>
-          <p>Active students</p>
+          <p className="mt-2 text-lg">Languages Supported</p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-4xl font-bold">
+            <CountUp
+              start={0}
+              end={3000}
+              duration={3}
+              enableScrollSpy={true}
+              scrollSpyOnce={true}
+              separator=","
+              suffix="+"
+            />
+          </p>
+          <p className="mt-2 text-lg">Medicines Scanned</p>
         </div>
       </div>
     </div>
