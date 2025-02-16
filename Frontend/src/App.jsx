@@ -103,7 +103,6 @@ const App = () => {
 
         {/* 🏥 Health Utilities */}
         <Route path="/symptoms" element={<Symptoms />} />
-        <Route path="/medicines" element={<Medsinfo />} />
         <Route path="/scanner" element={<Scanner />} />
           <Route path="/meds-info" element={<MedsInfoMain />} />
         {/* 🚨 Emergency Contacts */}
