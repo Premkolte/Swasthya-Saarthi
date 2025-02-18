@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import ReactLoading from "react-loading";
-import { account } from "../utils/Config";
+import { account } from "../utils/Config"; // Ensure this is correctly set up
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ID } from "appwrite";
@@ -35,26 +35,16 @@ export const AuthProvider = ({ children }) => {
   const registerUser = async (userData) => {
     try {
       setLoading(true);
-
       // Create new user
-      await account.create(
-        ID.unique(),
-        userData.email,
-        userData.password,
-        userData.name
-      );
-
+      await account.create(ID.unique(), userData.email, userData.password, userData.name);
       return {
         success: true,
         message: "Account created successfully! Please sign in.",
       };
     } catch (error) {
       console.error("Registration error:", error);
-
       if (error.code === 409) {
-        throw new Error(
-          "Email already registered. Please use a different email."
-        );
+        throw new Error("Email already registered. Please use a different email.");
       }
       if (error.message.includes("password")) {
         throw new Error("Password must be at least 8 characters long.");
@@ -66,17 +56,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Login Function
-  const loginUser = async ({ email, password }) => {
+  const loginUser = async (email, password) => {
     try {
       setLoading(true);
-
       // Create session with email/password
       await account.createEmailSession(email, password);
-
       // Get user details after successful authentication
       const accountDetails = await account.get();
       setUser(accountDetails);
-
       return {
         success: true,
         message: `Welcome back, ${accountDetails.name}!`,
@@ -84,11 +71,9 @@ export const AuthProvider = ({ children }) => {
       };
     } catch (error) {
       console.error("Login error:", error);
-
       if (error.code === 401) {
         throw new Error("Invalid email or password.");
       }
-
       throw new Error("Login failed. Please try again.");
     } finally {
       setLoading(false);
@@ -139,4 +124,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
 export const useError = () => useContext(ErrorContext);
