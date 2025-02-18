@@ -29,7 +29,7 @@ import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
 import DocVault from "./DocVault/DocVault";
 import Learn from "./learn/Learn"; // Import the Learn component
-import SymptomChecker from "./Pages/SymptomChecker"; // Import the SymptomChecker component
+// import SymptomChecker from "./Pages/Symptomchecker";
 
 // Banner Data for Sections
 const BannerData = {
@@ -125,7 +125,7 @@ const App = () => {
 
         <Route path="/learn" element={<Learn />} />
 
-        <Route path="/symptom-checker" element={<SymptomChecker />} />
+        {/* <Route path="/symptom-checker" element={<SymptomChecker />} /> */}
 
       </Routes>
           
