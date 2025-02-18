@@ -77,7 +77,7 @@ const featureList = [
     icon: <FaBookMedical />,
     color: "#008080",
     delay: 1.0,
-    route: "/medical-terms",
+    route: "/learn",
   },
   {
     id: 10,

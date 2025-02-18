@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import { account } from "../utils/Config";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ID } from "appwrite";
 
 // Create contexts
 export const ErrorContext = createContext();
@@ -16,84 +17,100 @@ export const AuthProvider = ({ children }) => {
     checkUserStatus();
   }, []);
 
-  // ✅ Check User Status on Load
+  // Check User Status on Load
   const checkUserStatus = async () => {
     try {
-      const accountDetails = await account.get();
-      setUser(accountDetails);
+      const session = await account.get();
+      if (session) {
+        setUser(session);
+      }
     } catch (error) {
-      console.error("User Check Error:", error.message);
-    }
-    setLoading(false);
-  };
-
-  // ✅ Register Function (Auto-Verifies User & Shows Notification)
-  const registerUser = async (userData, navigate) => {
-    try {
-      setLoading(true);
-      await account.create(userData.email, userData.password, userData.name);
-
-      // ✅ Directly mark user as verified (Appwrite does not have a direct API for this, but self-hosted versions can disable email verification)
-      const updatedUser = await account.updatePrefs({ verified: true });
-
-      console.log("User Verified:", updatedUser);
-
-      toast.success("Registration successful! Redirecting to login...", {
-        position: "top-center",
-        autoClose: 3000, // Closes in 3 seconds
-      });
-
-      setTimeout(() => {
-        navigate("/signin");
-      }, 3000);
-
-      setLoading(false);
-    } catch (error) {
-      toast.error(error.message, { position: "top-center" });
-      console.error("Registration Error:", error.message);
+      setUser(null);
+    } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Login Function
-  const loginUser = async (userInfo, navigate) => {
+  // Register Function
+  const registerUser = async (userData) => {
     try {
       setLoading(true);
-      const response = await account.createEmailPasswordSession(
-        userInfo.email,
-        userInfo.password
+
+      // Create new user
+      await account.create(
+        ID.unique(),
+        userData.email,
+        userData.password,
+        userData.name
       );
 
-      const accountDetails = await account.get();
-      setUser(accountDetails);
-      setLoading(false);
-
-      toast.success("Login successful!", { position: "top-center" });
-
-      navigate("/");
+      return {
+        success: true,
+        message: "Account created successfully! Please sign in.",
+      };
     } catch (error) {
-      toast.error(error.message, { position: "top-center" });
-      console.error("Login Error: ", error.message);
+      console.error("Registration error:", error);
+
+      if (error.code === 409) {
+        throw new Error(
+          "Email already registered. Please use a different email."
+        );
+      }
+      if (error.message.includes("password")) {
+        throw new Error("Password must be at least 8 characters long.");
+      }
+      throw new Error("Registration failed. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Logout Function
-  const logoutUser = async (navigate) => {
+  // Login Function
+  const loginUser = async ({ email, password }) => {
+    try {
+      setLoading(true);
+
+      // Create session with email/password
+      await account.createEmailSession(email, password);
+
+      // Get user details after successful authentication
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+
+      return {
+        success: true,
+        message: `Welcome back, ${accountDetails.name}!`,
+        user: accountDetails,
+      };
+    } catch (error) {
+      console.error("Login error:", error);
+
+      if (error.code === 401) {
+        throw new Error("Invalid email or password.");
+      }
+
+      throw new Error("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Logout Function
+  const logoutUser = async () => {
     try {
       await account.deleteSession("current");
       setUser(null);
-      toast.success("Logged out successfully!", { position: "top-center" });
-      navigate("/login");
+      return { success: true, message: "Logged out successfully!" };
     } catch (error) {
-      toast.error("Failed to log out. Please try again.", { position: "top-center" });
-      console.error("Logout Error:", error.message);
+      console.error("Logout error:", error);
+      throw new Error("Logout failed. Please try again.");
     }
   };
 
   // Context Data
   const contextData = {
     user,
+    loading,
     loginUser,
     logoutUser,
     registerUser,
@@ -104,7 +121,7 @@ export const AuthProvider = ({ children }) => {
       <ErrorContext.Provider value={{}}>
         {loading ? (
           <div className="flex justify-center items-center h-screen">
-            <ReactLoading type="spin" color="blue" height="10%" width="10%" />
+            <ReactLoading type="spin" color="#4F46E5" height={50} width={50} />
           </div>
         ) : (
           children
@@ -115,5 +132,11 @@ export const AuthProvider = ({ children }) => {
 };
 
 // Custom hooks for using the contexts
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 export const useError = () => useContext(ErrorContext);

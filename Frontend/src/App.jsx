@@ -28,6 +28,9 @@ import Scanner from "./Pages/scanner"; // FIXED: Scanner should be uppercase
 import { Analytics } from "@vercel/analytics/react";
 import SignIn from "./Pages/Signin";
 import DocVault from "./DocVault/DocVault";
+import Learn from "./learn/Learn"; // Import the Learn component
+import SymptomChecker from "./Pages/SymptomChecker"; // Import the SymptomChecker component
+
 // Banner Data for Sections
 const BannerData = {
   image: Img1,
@@ -119,6 +122,10 @@ const App = () => {
         {/* 📁 Document Vault */
         <Route path="/docvault" element={<DocVault />} />
         }
+
+        <Route path="/learn" element={<Learn />} />
+
+        <Route path="/symptom-checker" element={<SymptomChecker />} />
 
       </Routes>
           

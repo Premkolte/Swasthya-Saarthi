@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MdMenu } from "react-icons/md";
-import { FaChevronDown, FaUserCircle } from "react-icons/fa";
+import { FaChevronDown, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 import GoogleTranslate from "./Language.jsx";
 import TextToSpeech from "./TexttoSpeach.jsx";
 import ThemeChange from "./Themechange.jsx";
@@ -19,10 +21,10 @@ const NavbarMenu = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [user, setUser] = useState(null); // Simulated user state
   const dropdownRef = useRef(null);
+  const { user, logoutUser } = useAuth();
+  const navigate = useNavigate();
 
-  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -33,6 +35,16 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const result = await logoutUser();
+      toast.success(result.message);
+      navigate("/signin");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
@@ -82,33 +94,55 @@ const Navbar = () => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               {user ? (
-                <img
-                  src={user.profilePic}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full border"
-                />
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="font-medium">{user.name}</span>
+                  <FaChevronDown />
+                </div>
               ) : (
-                <FaUserCircle className="text-2xl text-blue-600" />
+                <>
+                  <FaUserCircle className="text-2xl text-blue-600" />
+                  <FaChevronDown />
+                </>
               )}
-              <FaChevronDown />
             </button>
             {dropdownOpen && (
               <motion.ul
-                ref={dropdownRef} // Attach the ref here
+                ref={dropdownRef}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden"
+                className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden"
               >
                 {user ? (
-                  <li>
-                    <Link
-                      to="/profile"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Profile
-                    </Link>
-                  </li>
+                  <>
+                    <li className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm text-gray-500">Signed in as</p>
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {user.email}
+                      </p>
+                    </li>
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                      >
+                        <FaUserCircle />
+                        <span>Dashboard</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 flex items-center space-x-2"
+                      >
+                        <FaSignOutAlt />
+                        <span>Sign out</span>
+                      </button>
+                    </li>
+                  </>
                 ) : (
                   <>
                     <li>
@@ -116,7 +150,7 @@ const Navbar = () => {
                         to="/signin"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
-                        Login
+                        Sign in
                       </Link>
                     </li>
                     <li>
@@ -124,7 +158,7 @@ const Navbar = () => {
                         to="/signup"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
-                        Register
+                        Create account
                       </Link>
                     </li>
                   </>
@@ -158,6 +192,35 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
+              {user ? (
+                <>
+                  <li className="pt-4 border-t border-gray-200">
+                    <Link
+                      to="/dashboard"
+                      className="block text-gray-700 font-medium hover:text-blue-600 transition"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="text-red-600 font-medium hover:text-red-700 transition"
+                    >
+                      Sign out
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li className="pt-4 border-t border-gray-200">
+                  <Link
+                    to="/signin"
+                    className="block text-blue-600 font-medium hover:text-blue-700 transition"
+                  >
+                    Sign in
+                  </Link>
+                </li>
+              )}
             </ul>
           </motion.div>
         )}
